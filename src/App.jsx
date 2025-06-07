@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [tipo, setTipo] = useState("P");
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <label htmlFor="tipo">Tipo: </label>
+        <select id="tipo" onChange={(e) => setTipo(e.target.value)}>
+          <option value="P">Professor</option>
+          <option value="F">Funcionário</option>
+        </select>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {tipo == "P" ? (
+        <div>
+          <label htmlFor="formacao">Formação: </label>
+          <input
+            id="formacao"
+            type="text"
+            placeholder="Digite a formação do professor"
+          />
+        </div>
+      ) : (
+        <div>
+          <label htmlFor="habilidades">Habilidades: </label>
+          <input
+            id="habilidades"
+            type="text"
+            placeholder="Digite as habilidades do funcionário"
+          />
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
