@@ -15,6 +15,10 @@ O tutorial faz referência a pergunta "How do you test for the non-existence of 
 
 ### Descrição do problema
 
+
+
 ### Solução do problema a partir da resposta escolhida
+
+
 
 ### Análise das demais respostas
