@@ -11,6 +11,33 @@ O tutorial faz referência a pergunta "How do you test for the non-existence of 
 
 ## Etapa 1
 
+Para este tutorial, consideraremos o [Stack Overflow](https://stackoverflow.com/questions) como nossa biblioteca de perguntas e respostas sobre desenvolvimento e programação. Nesse sentido, assumindo o objetivo de encontrar uma pergunta sobre um problema relacionado a testes de unidade com pelo menos uma resposta aceita e no mínimo 400 votos, seguiremos os passos descritos a seguir.
+
+### Elaboração da busca
+
+Inicialmente, após acessar a página de perguntas da biblioteca, utilizaremos a barra de busca para inserir os termos relacionados ao conteúdo desejado. Considerando o nosso objetivo, utilizaremos “unit” e “test” para encontrar resultados acerca de testes unitários, como demonstrado na figura abaixo.
+
+![Captura de tela da barra de busca do Stack Overflow com os termos "unit" e "test".](public/barra-de-busca-termos.png)
+
+Além dos termos, utilizaremos dois operadores para que a busca traga resultados específicos que satisfaçam os requisitos desejados.
+
+| Operador | Valor | Descrição |
+| --- | :---: | --- |
+| `hasaccepted` | yes | Retorna apenas postagens que possuam respostas aceitas |
+| `score` | 400 | Retorna apenas postagens que tenham pelo menos 400 votos |
+
+Após unir os termos e operadores, a consulta final deve ser construída da seguinte forma:
+
+![Captura de tela da barra de busca do Stack Overflow com os termos e operadores escolhidos.](public/barra-de-busca-final.png)
+
+### Filtrando resultados
+
+Com os resultados da busca em mãos, utilizaremos um filtro para ordená-los em ordem decrescente de pontuação. Para isso, clicaremos em “*More*” e, em seguida, em “*Score*”, como destacado abaixo.
+
+![Captura de tela com a sequência de filtros utilizados no Stack Overflow.](public/sequencia-de-filtros.png)
+
+Após aplicar o filtro, escolha uma das perguntas listadas. Como foi mencionado anteriormente, para este trabalho, escolhemos a pergunta [“*How do you test for the non-existence of an element using jest and react-testing-library?*"](https://stackoverflow.com/questions/52783144/how-do-you-test-for-the-non-existence-of-an-element-using-jest-and-react-testing).
+
 ## Etapa 2
 
 ### Descrição do problema
