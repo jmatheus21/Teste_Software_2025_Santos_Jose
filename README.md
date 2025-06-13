@@ -98,24 +98,24 @@ const App = () => {
 O processo para escolher as demais alternativas de respostas para este documento não foi o número de votos, e sim o quão significativa a sua análise será para o entendimento do problema do autor da pergunta.
 
 ### 1. Use queryBy / queryAllBy. - 104 Votos
-![Captura de tela da primeira resposta.](public/Resposta-errrada1.png)
+![Captura de tela da primeira resposta.](public/Resposta-errada1.png)
 
 Esta resposta está em segundo lugar dentre as escolhidas, porém alguns usuários acreditam que ela deveria ser a resposta aceita. Ela tem um caráter menos prático e mais conceitual, explicando que a função que o autor da pergunta utilizou, a `getBy` lança um error se o objeto que ele quer observar na página não foi encontrado, e então ofereceu as alternativas `queryBy` e `queryAllBy`.
 
 ### 2. GetBy* throws an error when not finding an elements, so you can check for that - 38 Votos
 
-![Captura de tela da segunda resposta.](public/Resposta-errrada2.png)
+![Captura de tela da segunda resposta.](public/Resposta-errada2.png)
 
 Esta resposta está tecnicamente correta, mas não responde a pergunta do usuário e nem explica como pode resolvê-la. Ele apenas atesta que a função `getBy` lança um erro quando não encontra os elementos que está procurando e utiliza a função de depuração para o propósito de verificação, o que não é uma boa prática e pode levar a erros.
 
 ### 3. Another solution: you could also use a try/catch block - 13 Votos
 
-![Captura de tela da terceira resposta.](public/Resposta-errrada3.png)
+![Captura de tela da terceira resposta.](public/Resposta-errada3.png)
 
 Este usuário sugere uma abordagem com `try`/`catch`, essa alternativa é desnecessariamente complexa, uma vez que o react-testing-library oferece funções simples e diretas para verificar a não existência de elementos. Além disso, o uso de `try`/`catch` pode levar a múltiplas expectativas sendo executadas, o que pode causar confusão e erros.
 
 ### 4. The default behavior of queryByRole is to find exactly one element. If not, it throws an error. So if you catch an error, this means the current query finds 0 element - 8 Votos
 
-![Captura de tela da quarta resposta.](public/Resposta-errrada4.png)
+![Captura de tela da quarta resposta.](public/Resposta-errada4.png)
 
 Esta resposta é a mais errônea entre as alternativas. Ele explica que o comportamento do `queryByRole` é encontrar exatamente um elemento, e, se não, lança um erro, e que o `getByRole` retorna null caso não encontre nada. A explicação das funções está invertida, o que pode induzir ao erro qualquer pessoa sem o conhecimento necessário. Além de utilizar métodos desnecessariamente complicados como as funções `expect()` e `toThrow()`.
