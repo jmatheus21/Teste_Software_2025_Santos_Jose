@@ -35,7 +35,7 @@ const App = () => {
             />
           </div>
         )}
-        <button type="button" class="btn btn-primary ms-auto">Enviar</button>
+        <button type="button" className="btn btn-primary ms-auto">Enviar</button>
       </form>
     </div>
   );
