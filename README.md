@@ -91,6 +91,206 @@ const App = () => {
 
 ### Solução do problema a partir da resposta escolhida
 
+Como já foi mencionado na descrição do problema, o autor cita que tentou utilizar os métodos `getByText` e `getByTestId` para verificar a ausência de elementos. Entretanto, tais métodos lançam uma exceção quando o elemento não é encontrado, o que faz com que a execução do teste seja interrompida imediatamente, ou seja, o `expect` que serviria para verificar a não existência do elemento nunca seria alcançado.
+
+Dessa maneira, a solução adotada para esse problema, foi a utilização do método `queryBy`, que, diferentemente do `getBy`, quando o elemento não é encontrado, retorna **null**, o que é ideal para o nosso caso, que é de verificar a não existência de um elemento, já que podemos tratar isso, visto que a execução do nosso teste não será interrompida de forma abrupta devido a uma exceção, caso o elemento não tinha sido encontrado, como é o caso do `getBy`.
+
+Vale ressaltar que haverá dois casos de teste: um para verificar a renderização do campo "Habilidades" e outro para o campo "Formação". Como já mencionado, o campo "Habilidades" deve ser exibido apenas quando o tipo selecionado for Funcionário, e o campo "Formação" apenas quando o tipo selecionado for Professor.
+
+A seguir, vamos entender como essa solução foi aplicada, linha por linha, no código:
+
+---
+
+```js
+import { render, screen } from "@testing-library\react";
+```
+Importa funções da *Testing Library*, como o `render`, que renderiza o componente *React* em um ambiente de teste, e o `screen`, que permite acessar elementos renderizados (como `getByLabelText` e `queryByText`)
+
+---
+
+
+```js
+import "@testing-library/jest-dom";
+```
+Adiciona *matchers* extras, que são responsáveis pela verificação de elementos no *DOM*, como o `toBeNull()` e `toBeInTheDocument()`;
+
+---
+```js
+import userEvent from "@testing-library/user-event";
+```
+Permite simular interações reais do usuário, como clicar, digitar e selecionar opções em campos `<select>`
+
+---
+
+```js
+import App from "../src/App";
+```
+Importa o componente `App`, que será o alvo dos testes
+
+---
+
+```js
+describe("App Component", () => {
+```
+Define um bloco de testes relacionado ao componente `App`, é uma forma de agrupar testes que se referem ao mesmo comportamento ou funcionalidade
+
+---
+
+**1° caso de teste - Verificação da renderização do campo “Habilidades”**
+
+```js
+it("verifica a renderização do campo 'Habilidades' utilizando os métodos queryByText e toBeNull", async () => {
+```
+Define um teste com essa descrição, usa o `async` porque usa interações assíncronas (com `userEvent`)
+
+---
+
+```js
+render(<App/>);
+```
+Renderiza o componente `App`, criando um *DOM* virtual que será utilizado no teste
+
+---
+
+```js
+const tipoSelect = screen.getByLabelText(/Tipo:/i);
+```
+Seleciona o `<select>` que está associado a um `<label>` com o texto “Tipo:”, ou seja, aqui é como se o usuário estivesse acessando o `<select>` referente ao tipo
+
+---
+
+```js
+await userEvent.selectOptions(tipoSelect, 'P');
+```
+Simula o usuário selecionando a opção ‘P’ (Professor) no campo Tipo
+
+---
+
+```js
+expect(tipoSelect.value).toBe('P');
+```
+Garante que o valor selecionado seja realmente ‘P’, ou seja, há confirmação de que o tipo de usuário selecionado é um professor
+
+---
+
+```js
+const campoHabilidadesAntesDaMudancaDeTipo = screen.queryByText(/Habilidades:/i);
+```
+Aqui é verificado se o campo “Habilidades” foi renderizado na tela. Como estamos usando o `queryBy`, caso o elemento seja encontrado, ele retorna o elemento: caso contrário, é retornado **null**. Nesse caso, o valor retornado deve ser **null**, pois o campo “Habilidades” não deve ser renderizado quando o tipo selecionado é um professor
+
+---
+
+```js
+expect(campoHabilidades).toBeNull();
+```
+Confirma que o campo “Habilidades” não foi renderizado
+
+---
+
+```js
+await userEvent.selectOptions(tipoSelect, 'F');
+```
+Nesse momento, simulamos a troca do tipo de usuário para um funcionário, para verificar se o campo “Habilidades” será renderizado
+
+---
+
+```js
+expect(tipoSelect.value).toBe('F');
+```
+Garante que o valor selecionado seja realmente ‘F’, ou seja, há confirmação de que o tipo de usuário selecionado é um funcionário
+
+---
+
+```js
+const campoHabilidadesDepoisDaMudancaDeTipo = screen.queryByText(/Habilidades:/i);
+```
+Aqui é verificado se o campo “Habilidades” foi renderizado. Agora, ele deve ser renderizado, pois esse campo é referente ao usuário do tipo funcionário
+
+---
+
+```js
+expect(campoHabilidadesDepoisDaMudancaDeTipo).not.toBeNull();
+```
+Confirma que o campo “Habilidades” foi renderizado através da negação do `toBeNull()`, ou seja, como esse campo foi encontrado, o `queryBy` irá retornar o elemento; sendo assim, não será nulo
+
+---
+
+**2° caso de teste - Verificação da renderização do campo "Formação"**
+
+```js
+it("verifica a renderização do campo 'Formação' utilizando os métodos queryByText e toBeInTheDocument", async () => {
+```
+Define um teste com essa descrição, usa o async porque usa interações assíncronas (com userEvent)
+
+---
+
+```js
+render(<App/>);
+```
+Renderiza o componente `App`, criando um *DOM* virtual que será utilizado no teste
+
+---
+
+```js
+const tipoSelect = screen.getByLabelText(/Tipo:/i);
+```
+Seleciona o `<select>` que está associado a um `<label>` com o texto “Tipo:”, ou seja, aqui é como se o usuário estivesse acessando o `<select>` referente ao tipo
+
+---
+
+```js
+await userEvent.selectOptions(tipoSelect, 'F');
+```
+Simula o usuário selecionando a opção ‘F’ (Funcionário) no campo Tipo
+
+---
+
+```js
+expect(tipoSelect.value).toBe('F');
+```
+Garante que o valor selecionado seja realmente ‘F’, ou seja, há confirmação de que o tipo de usuário selecionado é um funcionário
+
+---
+
+```js
+const campoFormacao = screen.queryByText(/Formação:/i);
+```
+Aqui é verificado se o campo “Formação” foi renderizado na tela. Como estamos usando o `queryBy`, caso o elemento seja encontrado, ele retorna o elemento: caso contrário, é retornado **null**. Nesse caso, o valor retornado deve ser **null**, pois o campo “Formação” não deve ser renderizado quando o tipo selecionado é um funcionário
+
+---
+
+```js
+expect(campoFormacao).not.toBeInTheDocument();
+```
+Confirma que o campo “Formação” não foi renderizado através da negação do método `toBeInTheDocument()`, que verifica se um determinado elemento se encontra no *DOM*
+
+---
+
+```js
+await userEvent.selectOptions(tipoSelect, 'P');
+```
+Nesse momento, simulamos a troca do tipo de usuário para um professor, para verificar se o campo “Formação” será renderizado
+
+---
+
+```js
+expect(tipoSelect.value).toBe('P');
+```
+Garante que o valor selecionado seja realmente ‘P’, ou seja, há confirmação de que o tipo de usuário selecionado é um professor
+
+---
+
+```js
+const campoFormacaoDepoisDaMudancaDeTipo = screen.queryByText(/Formação:/i);
+```
+Aqui é verificado se o campo “Formação” foi renderizado. Agora, ele deve ser renderizado, pois esse campo é referente ao usuário do tipo professor
+
+---
+
+```js
+expect(campoFormacaoDepoisDaMudancaDeTipo).toBeInTheDocument();
+```
+Confirma que o campo “Formação” foi renderizado através do método `toBeInTheDocument()`, que, como já foi mencionado anteriormente, verifica se um elemento está presente no *DOM*. Nesse caso, esse campo deverá ser renderizado, pois faz referência a um usuário do tipo professor
 
 
 ## Análise das demais respostas
