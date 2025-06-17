@@ -5,7 +5,7 @@ import App from "../src/App";
 
 describe("App Component", () => {
 
-    it("verifica a renderização do campo 'Habilidades' utilizando o método toBeNull", async () => {
+    it("verifica a renderização do campo 'Habilidades' utilizando os métodos queryByText e toBeNull", async () => {
 
         render(<App/>);
 
@@ -15,8 +15,8 @@ describe("App Component", () => {
         expect(tipoSelect.value).toBe('P');
         
         // Verifica se o campo "Habilidades" não foi renderizado quando o tipo "Professor" está selecionado
-        const campoHabilidadesAntesDaMudancaDeTipo = screen.queryByText(/Habilidades:/i);
-        expect(campoHabilidadesAntesDaMudancaDeTipo).toBeNull();
+        const campoHabilidades = screen.queryByText(/Habilidades:/i);
+        expect(campoHabilidades).toBeNull();
 
         // Troca o tipo para "Funcionário"
         await userEvent.selectOptions(tipoSelect, 'F');
@@ -27,7 +27,7 @@ describe("App Component", () => {
         expect(campoHabilidadesDepoisDaMudancaDeTipo).not.toBeNull();
     });
 
-    it("verifica a renderização do campo 'Formação' utilizando o método toBeInTheDocument", async () => {
+    it("verifica a renderização do campo 'Formação' utilizando os métodos queryByText e toBeInTheDocument", async () => {
 
         render(<App/>);
 
