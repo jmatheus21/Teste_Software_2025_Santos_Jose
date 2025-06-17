@@ -91,7 +91,7 @@ const App = () => {
 
 ### Solução do problema a partir da resposta escolhida
 
-Como já foi mencionado na descrição do problema, o autor cita que tentou utilizar os métodos `getByText` e `getByTestId` para verificar a ausência de elementos. Entretanto, tais métodos lançam uma exceção quando o elemento não é encontrado, o que faz com que a execução do teste seja interrompida imediatamente, ou seja, o `expect` que serviria para verificar a não existência do elemento nunca seria alcançado.
+Como já foi mencionado na descrição do problema, o autor da pergunta cita que tentou utilizar os métodos `getByText` e `getByTestId` para verificar a ausência de elementos. Entretanto, tais métodos lançam uma exceção quando o elemento não é encontrado, o que faz com que a execução do teste seja interrompida imediatamente, ou seja, o `expect` que serviria para verificar a não existência do elemento nunca seria alcançado.
 
 Dessa maneira, a solução adotada para esse problema, foi a utilização do método `queryBy`, que, diferentemente do `getBy`, quando o elemento não é encontrado, retorna **null**, o que é ideal para o nosso caso, que é de verificar a não existência de um elemento, já que podemos tratar isso, visto que a execução do nosso teste não será interrompida de forma abrupta devido a uma exceção, caso o elemento não tinha sido encontrado, como é o caso do `getBy`.
 
