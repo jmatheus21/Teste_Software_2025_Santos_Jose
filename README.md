@@ -89,6 +89,8 @@ const App = () => {
 
 É importante notar que o problema não consiste em verificar se o elemento não está visível para o usuário, mas sim se ele existe ou não no DOM. Portanto, um cenário em que um elemento fica invisível (por exemplo, usando `display: none` na estilização) devido à alteração de uma propriedade ou evento não consiste no objetivo da pergunta do usuário.
 
+Para execução do ambiente de teste, após a clonagem do repositório, instale as bibliotecas com o comando no terminal `npm install` e rode os testes da solução com `npm test tests/App.test.jsx`. Caso queira visualizar a tela do formulário, execute `npm run dev`. 
+
 ### Solução do problema a partir da resposta escolhida
 
 Como já foi mencionado na descrição do problema, o autor da pergunta cita que tentou utilizar os métodos `getByText` e `getByTestId` para verificar a ausência de elementos. Entretanto, tais métodos lançam uma exceção quando o elemento não é encontrado, o que faz com que a execução do teste seja interrompida imediatamente, ou seja, o `expect` que serviria para verificar a não existência do elemento nunca seria alcançado.
